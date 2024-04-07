@@ -1,4 +1,4 @@
-package com.kitzbuhel.configurations;
+package com.kitzbuhel.TodosLogicService.configurations;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ public class UserConfig {
     private String baseUrl;
 
     @Bean
-    public WebClient webClient() {
+    public WebClient getWebClient() {
         return WebClient.create(baseUrl);
     }
 }

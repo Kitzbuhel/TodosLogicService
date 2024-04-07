@@ -1,4 +1,4 @@
-package com.kitzbuhel.responses;
+package com.kitzbuhel.TodosLogicService.responses;
 
 import lombok.Getter;
 import lombok.Setter;
