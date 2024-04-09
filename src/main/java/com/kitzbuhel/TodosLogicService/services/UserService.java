@@ -17,7 +17,7 @@ import java.util.Objects;
 public class UserService {
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private WebClient webClient = WebClient.create("http://localhost:8080");
+    private WebClient webClient = WebClient.create("{authservice.base.url}");
 
     public Boolean status(String email) throws JsonProcessingException {
         try {

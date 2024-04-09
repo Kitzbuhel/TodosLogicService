@@ -21,7 +21,7 @@ import java.util.Objects;
 @Service
 public class TodoService {
     private ObjectMapper objectMapper = new ObjectMapper();
-    private WebClient webClient = WebClient.create("http://localhost:8081");
+    private WebClient webClient = WebClient.create("{ioservice.base.url}");
 
     public ResponseEntity<String> getTodos(String email) throws JsonProcessingException {
         try {
