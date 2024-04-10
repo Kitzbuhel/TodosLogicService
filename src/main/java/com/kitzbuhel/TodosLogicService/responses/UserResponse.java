@@ -8,25 +8,19 @@ import java.util.Date;
 public class UserResponse {
     @Getter
     @Setter
-    private String email;
+    private boolean status;
+
     @Getter
     @Setter
-    private String password;
+    private boolean fromError;
+
     @Getter
     @Setter
-    private Boolean isLoggedIn;
-    @Getter
-    @Setter
-    private Date timestamp;
+    private String errorMessage;
 
-    public UserResponse(String email, String password, Boolean isLoggedIn, Date timestamp) {
-        this.email = email;
-        this.password = password;
-        this.isLoggedIn = isLoggedIn;
-        this.timestamp = timestamp;
-    }
-
-    public UserResponse() {
-
+    public UserResponse(boolean status, boolean fromError, String errorMessage) {
+        this.status = status;
+        this.fromError = fromError;
+        this.errorMessage = errorMessage;
     }
 }

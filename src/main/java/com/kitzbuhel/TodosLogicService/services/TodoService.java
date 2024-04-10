@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitzbuhel.TodosLogicService.responses.TodoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,12 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Service
 public class TodoService {
+    @Value("${IOSERVICE_BASE_URL}")
+    private String ioServiceBaseUrl;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private WebClient webClient = WebClient.create("{ioservice.base.url}");
-
+    private WebClient webClient = WebClient.create(ioServiceBaseUrl);
+    private Logger logger = Logger.getLogger(TodoService.class.getName());
     public ResponseEntity<String> getTodos(String email) throws JsonProcessingException {
         try {
             Map<String, String> body = Map.of("email", email);
@@ -72,6 +76,7 @@ public class TodoService {
     }
 
     public ResponseEntity<String> addTodo(String email, String description) throws JsonProcessingException {
+        logger.info(ioServiceBaseUrl);
         try {
             Map<String, String> body = Map.of("email", email, "description", description);
             Map<String, String> responseMap;

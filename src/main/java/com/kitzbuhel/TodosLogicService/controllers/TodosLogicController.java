@@ -3,8 +3,10 @@ package com.kitzbuhel.TodosLogicService.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitzbuhel.TodosLogicService.responses.TodoResponse;
+import com.kitzbuhel.TodosLogicService.responses.UserResponse;
 import com.kitzbuhel.TodosLogicService.services.TodoService;
 import com.kitzbuhel.TodosLogicService.services.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/todo")
 public class TodosLogicController {
     @Autowired
     private TodoService todoService;
@@ -31,8 +34,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.getTodos(email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -48,8 +57,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.getCompletedTodos(email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -65,8 +80,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.getNotCompletedTodos(email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -88,8 +109,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.addTodo(email, description);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -105,8 +132,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.deleteTodo(id, email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -128,8 +161,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.updateTodo(id, email, description);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -145,8 +184,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.toggleTodoStatus(id, email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
@@ -162,8 +207,14 @@ public class TodosLogicController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.status(email)) {
+        UserResponse userResponse = userService.status(email);
+        if (userResponse.isStatus()) {
             return todoService.deleteCompleted(email);
+        }
+
+        if (userResponse.isFromError()) {
+            response.put("response", userResponse.getErrorMessage());
+            return new ResponseEntity<>(objectMapper.writeValueAsString(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("response", "User not logged in");
