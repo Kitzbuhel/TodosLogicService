@@ -20,11 +20,13 @@ public class UserService {
     @Value("${AUTHSERVICE_BASE_URL}")
     private String userServiceBaseUrl;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private WebClient webClient = WebClient.create(userServiceBaseUrl);
+    private WebClient webClient = null;
     private Logger logger = Logger.getLogger(UserService.class.getName());
 
     public UserResponse status(String email) throws JsonProcessingException {
-        logger.info(userServiceBaseUrl);
+        if (webClient == null) {
+            webClient = WebClient.create(userServiceBaseUrl);
+        }
         try {
             WebClient.ResponseSpec response = webClient.get()
                     .uri("/api/user/status/{email}", email)

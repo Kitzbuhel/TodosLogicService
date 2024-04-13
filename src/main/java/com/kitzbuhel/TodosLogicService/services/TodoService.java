@@ -25,9 +25,12 @@ public class TodoService {
     @Value("${IOSERVICE_BASE_URL}")
     private String ioServiceBaseUrl;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private WebClient webClient = WebClient.create(ioServiceBaseUrl);
+    private WebClient webClient = null;
     private Logger logger = Logger.getLogger(TodoService.class.getName());
     public ResponseEntity<String> getTodos(String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
@@ -44,6 +47,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> getCompletedTodos(String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
@@ -60,6 +66,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> getNotCompletedTodos(String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
@@ -76,7 +85,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> addTodo(String email, String description) throws JsonProcessingException {
-        logger.info(ioServiceBaseUrl);
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email, "description", description);
             Map<String, String> responseMap;
@@ -93,6 +104,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> deleteTodo(Long id, String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
@@ -109,6 +123,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> updateTodo(Long id, String email, String description) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email, "description", description);
             Map<String, String> responseMap;
@@ -125,6 +142,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> toggleTodoStatus(Long id, String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
@@ -141,6 +161,9 @@ public class TodoService {
     }
 
     public ResponseEntity<String> deleteCompleted(String email) throws JsonProcessingException {
+        if (webClient == null) {
+            webClient = WebClient.create(ioServiceBaseUrl);
+        }
         try {
             Map<String, String> body = Map.of("email", email);
             Map<String, String> responseMap;
